@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the VIP List — Aurelia Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F9F5EE;
+    --warm-white: #FDFAF4;
+    --ink: #1C1917;
+    --muted: #78716C;
+    --red: #C0392B;
+    --red-light: #E8A099;
+    --border: #E8E0D0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    padding: 28px 24px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 24px 60px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--red-light);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 8vw, 68px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    color: var(--red);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .subhead {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 20px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.25s forwards;
+  }
+
+  .value-prop {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink);
+    max-width: 540px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.3s forwards;
+  }
+
+  .form-wrap {
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  form {
+    display: flex;
+    gap: 0;
+    max-width: 460px;
+    margin: 0 auto 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--warm-white);
+    transition: box-shadow 0.2s;
+  }
+
+  form:focus-within {
+    box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.15);
+  }
+
+  input[type="email"] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 16px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+  }
+
+  input::placeholder { color: #B5AFA7; }
+
+  button[type="submit"] {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 16px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  button[type="submit"]:hover { background: #3C3836; }
+
+  .privacy {
+    font-size: 12px;
+    color: #A8A29E;
+    letter-spacing: 0.02em;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 64px 0;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.5s forwards;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider span {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #B5AFA7;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.6s forwards;
+  }
+
+  @media (max-width: 560px) {
+    .benefits { grid-template-columns: 1fr; gap: 24px; }
+    form { flex-direction: column; border-radius: 3px; }
+    button[type="submit"] { width: 100%; padding: 16px; }
+  }
+
+  .benefit-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .benefit h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--red);
+  }
+
+  .benefit p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .proof {
+    margin-top: 64px;
+    padding: 36px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 4px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.7s forwards;
+  }
+
+  .proof blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .proof cite {
+    font-size: 13px;
+    font-style: normal;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .proof cite::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .counter {
+    margin-top: 48px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.8s forwards;
+  }
+
+  .counter-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 12px;
+    color: #C4BDB6;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .success-msg {
+    display: none;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 3px;
+    padding: 16px 24px;
+    font-size: 14px;
+    color: var(--red);
+    max-width: 460px;
+    margin: 0 auto 20px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Aurelia Studio</div>
+</nav>
+
+<main>
+  <div class="eyebrow">For Ecom Entrepreneurs & Business Owners</div>
+
+  <h1>Your products deserve photos<br>that <em>actually sell.</em></h1>
+
+  <p class="subhead">
+    Most ecom owners are losing sales every single day because their product photos look cheap. Not because they need a $10,000 camera. Because nobody taught them the right way. Aurelia Studio is changing that.
+  </p>
+
+  <p class="value-prop">
+    Join the VIP list and be first in line when we open the doors to the only photography course and community built specifically for ecom entrepreneurs — where you'll learn to shoot scroll-stopping product photos with the gear you already own.
+  </p>
+
+  <div class="form-wrap">
+    <div class="success-msg" id="successMsg">
+      ✓ You're on the VIP list! Check your inbox for a confirmation from us.
+    </div>
+    <form id="signupForm" onsubmit="handleSubmit(event)">
+      <input type="email" id="emailInput" placeholder="Your best email address" required>
+      <button type="submit">Yes, I Want Early Access →</button>
+    </form>
+    <p class="privacy">No spam. No fluff. Just the stuff that actually moves your business forward.</p>
+  </div>
+
+  <div class="divider"><span>What you get</span></div>
+
+  <div class="benefits">
+    <div class="benefit">
+      <span class="benefit-icon">📦</span>
+      <h3>Shoot Like a Pro on a Shoestring</h3>
+      <p>No expensive studio. No fancy equipment. Just the right knowledge and a phone or entry-level camera.</p>
+    </div>
+    <div class="benefit">
+      <span class="benefit-icon">📈</span>
+      <h3>Photos That Convert</h3>
+      <p>The exact angles, lighting setups, and editing tricks that make customers stop scrolling and hit "Add to Cart."</p>
+    </div>
+    <div class="benefit">
+      <span class="benefit-icon">🤝</span>
+      <h3>A Community That Gets It</h3>
+      <p>Connect with ecom entrepreneurs building real brands, sharing wins, and growing together.</p>
+    </div>
+  </div>
+
+  <div class="proof">
+    <blockquote>
+      "I was spending thousands on product photographers every month. I wish something like this existed two years ago."
+    </blockquote>
+    <cite>— Beta Member, 7-Figure Shopify Store Owner</cite>
+  </div>
+
+  <div class="counter">
+    <div class="counter-dot"></div>
+    <span><strong>847 ecom entrepreneurs</strong> have already joined the waitlist</span>
+  </div>
+</main>
+
+<footer>
+  © 2026 Aurelia Studio. All rights reserved. &nbsp;·&nbsp; <a href="#" style="color:inherit">Privacy Policy</a>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  if (!email) return;
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  console.log('Subscribed:', email);
+}
+</script>
+
+</body>
+</html>
